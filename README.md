@@ -16,6 +16,6 @@ this app has the following scripts:
     "installAllDependencies": install both backend and frontend dependencies
     "installFrontend": install only frontend dependencies
     "installBackend": install backend dependencies
-    "build": compile the backend from TypeScript to the node supported JS through Babel
+    "build": compile the backend from TypeScript to the node supported JS through Babel AND build the React app
     "serve": run the Babel compiled sever.js
     "start": the only one you need to install all the dependencies, compile the backend code and run the server
