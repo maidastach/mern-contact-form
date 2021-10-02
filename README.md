@@ -1,6 +1,8 @@
 # contact-form
 
-Contact Form coded in TypeScript/React.js/Node.js/Express.js/MongoDB
+RESPONSIVE Contact Form coded in TypeScript/React.js/Node.js/Express.js/MongoDB
+
+Validation on Change of each value
 
 It also include the dependencies Nodemailer to send the copy of the form to the sender and recipient
 
