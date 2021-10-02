@@ -4,7 +4,7 @@
   "description": "Basic Contact Form",
   "main": "index.js",
   "scripts": {
-    "install": "npm install",
+    "installa": "npm install",
     "build": "rm -rf dist && babel backend -d dist --extensions '.ts,.js' && npm run serve",
     "serve": "node dist/server.js",
     "installClient": "cd public && npm install",

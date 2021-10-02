@@ -5,9 +5,10 @@ import { emailFunction, isNotEmpty, isValid, messageHasLength, numberCheck, vali
 
 export const postContactForm = async(req: express.Request, res: express.Response, next: express.NextFunction) => 
 {
-    const { name, email, telephone, city, message } = req.body;
+    const { fname, email, telephone, city, message } = req.body;
+    
     if (
-          isValid(name, isNotEmpty)
+          isValid(fname, isNotEmpty)
           && isValid(email, validateEmail)
           && isValid(telephone, numberCheck)
           && isValid(city, isNotEmpty)
@@ -17,7 +18,7 @@ export const postContactForm = async(req: express.Request, res: express.Response
     {
         const contact = new Contact(
             {
-                name,
+                fname,
                 email,
                 telephone,
                 city,
@@ -27,17 +28,17 @@ export const postContactForm = async(req: express.Request, res: express.Response
         const createdContact = await contact.save();
     
         if(!createdContact)
-            return res.status(401).send({ message: 'Error Processing Data, Form NOT Sent' })
+            return next()
 
         let mailOptions = 
         {
             from: 'Salvatore- NO REPLY no-reply@salderosa.com',
             to: email,
             subject: `Contact form n. ${contact._id.toString()}`,
-            html: emailFunction(name, email, telephone, city, message),
+            html: emailFunction(fname, email, telephone, city, message),
         }
 
-        //send copy to the USer contacting us
+        //send copy to the User
         transporter.sendMail(
             mailOptions, 
             async(err, data) =>
@@ -45,7 +46,7 @@ export const postContactForm = async(req: express.Request, res: express.Response
                 if(err)
                 {
                     await Contact.findByIdAndUpdate(contact._id, { sentConfirmation: false })
-                    return res.status(401).send({ message: 'Message NOT sent!<br><br>Please check your email address is correct' })
+                    return next()
                 }
                 await Contact.findByIdAndUpdate(contact._id, { sentConfirmation: true })
             }
@@ -57,7 +58,7 @@ export const postContactForm = async(req: express.Request, res: express.Response
                 from: email,
                 to: 'my@mail.com',
                 subject: `Contact request n. ${contact._id}`,
-                html: ` Name: ${name}<br>
+                html: ` Name: ${fname}<br>
                         Email: ${email}<br>
                         Phone Number: ${telephone}<br>
                         City: ${city}<br>
@@ -72,14 +73,14 @@ export const postContactForm = async(req: express.Request, res: express.Response
                 if(err)
                 {
                     await Contact.findByIdAndUpdate(contact._id, { receivedEmail: false })
-                    return res.status(401).send({ message: 'Message NOT sent!<br><br>Please check your email address is correct' })
+                    return next()
                 }
                 await Contact.findByIdAndUpdate(contact._id, { receivedEmail: true }) 
+                return res.send({ message: 'Thanks for Contacting US', data: createdContact })
+
             }
         )
-        
-        return res.send({ message: 'Thanks for Contacting US' })
     }
-    
-    return res.status(400).send({ message: 'Details Incorrect, Form NOT sent' });
+    else
+        return next()
 }

@@ -8,6 +8,7 @@ interface Validator
   (value: string, checker?: Validator): boolean
 }
 
+//here you should configurate your email server configs
 const nodemailerOptions =
                 {
                     port: 465,
@@ -15,8 +16,8 @@ const nodemailerOptions =
                     secure: true,
                     auth: 
                         {
-                            user: config.YourSecretEmail,
-                            pass: config.PasswordToSendEmail
+                            user: config.YourSecretEmail, //email domain stored in .env
+                            pass: config.PasswordToSendEmail //email password stored in .env
                         },
                     tls: 
                         {

@@ -7,6 +7,7 @@ import ContactRouter from './routers/ContactRouter.js';
 
 const port = config.PORT;
 const app = express();
+
 const errorHandler: express.ErrorRequestHandler = 
     (err: any, req: express.Request, res: express.Response, next: express.NextFunction) =>
     {
@@ -19,23 +20,16 @@ const sendSPA: express.Handler =
         res.send(path.join(__dirname, '..', '/public', '/build', 'index.html'));
     }
 
-mongoose.connect(
-    config.MONGODB_URL, 
-    // {
-    //     useNewUrlParser: true,
-    //     useUnifiedTopology: true,
-    //     useCreateIndex: true,
-    //     useFindAndModify: false,
-    // }
-)
+mongoose.connect(config.MONGODB_URL)
 .then(
     () => console.log('MongoDB Connected')
 )
 .catch(
-    error => console.log(error.reason)
+    error => console.log(error)
 );
 
 app.use(cors());
+app.use(json());
 
 app.use('/api/contact', ContactRouter);
 
