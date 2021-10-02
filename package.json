@@ -4,7 +4,9 @@
   "description": "Basic Contact Form",
   "main": "index.js",
   "scripts": {
-    "installDependencies": "npm install --also=dev && cd frontend && npm install",
+    "installAllDependencies": "npm install --also=dev && cd frontend && npm install",
+    "installFrontend": "cd frontend && npm install",
+    "installBackend": "npm install --also=dev",
     "build": "rm -rf dist && babel backend -d dist --extensions '.ts,.js'",
     "serve": "node dist/server.js",
     "start": "npm installDependencies && npm run build && npm run serve"
