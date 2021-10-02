@@ -1,10 +1,15 @@
 # contact-form
 
 Contact Form coded in TypeScript/React.js/Node.js/Express.js/MongoDB
+
 It also include the dependencies Nodemailer to send the copy of the form to the sender and recipient
 
 NODEMAILER has to be set with your email server before usage,
 nodemailerOptions can be found in the backend/utils.ts file
+
+YOU need to set up you local MongoDB
+setting the string connection in the .env as:
+MONGODB_URL=mongodb://localhost:27017/<yourDB>
 
 this app has the following scripts:
 
