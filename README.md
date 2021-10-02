@@ -7,6 +7,8 @@ Validation on Change of each value
 It also include the dependencies Nodemailer to send the copy of the form to the sender and recipient
 
 NODEMAILER has to be set with your email server before usage,
+otherwise it would return error!
+
 nodemailerOptions can be found in the backend/utils.ts file
 
 YOU need to set up you local MongoDB
