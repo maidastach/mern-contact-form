@@ -17,7 +17,7 @@ const errorHandler: express.ErrorRequestHandler =
 const sendSPA: express.Handler = 
     (req: express.Request, res: express.Response, next: express.NextFunction) => 
     {
-        res.send(path.join(__dirname, '..', '/frontend', '/build', 'index.html'));
+        res.send(path.join(__dirname, 'public', 'index.html'));
     }
 
 mongoose.connect(config.MONGODB_URL)
@@ -33,7 +33,7 @@ app.use(json());
 
 app.use('/api/contact', ContactRouter);
 
-app.use(express.static(path.join(__dirname, '..', '/frontend', '/build')), json());
+app.use(express.static(path.join(__dirname, 'public')), json());
 
 app.get('*', sendSPA)
 

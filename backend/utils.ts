@@ -1,30 +1,30 @@
 import nodemailer from 'nodemailer';
 import config from './config.js';
 
-const emailRegExp: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
 interface Validator
 {
   (value: string, checker?: Validator): boolean
 }
 
+const emailRegExp: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 //here you should configurate your email server configs
 const nodemailerOptions =
-                {
-                    port: 465,
-                    host: 'your@server.com',
-                    secure: true,
-                    auth: 
-                        {
-                            user: config.YourSecretEmail, //email domain stored in .env
-                            pass: config.PasswordToSendEmail //email password stored in .env
-                        },
-                    tls: 
-                        {
-                            rejectUnauthorized: true
-                        },
-                    requireTLS: true,
-                }
+{
+    port: config.EMAIL_SERVER_PORT,
+    host: config.EMAIL_SERVER,
+    secure: true,
+    auth: 
+        {
+            user: config.MY_EMAIL,
+            pass: config.EMAIL_PASSWORD
+        },
+    tls: 
+        {
+            rejectUnauthorized: true
+        },
+    requireTLS: true,
+}
 
 export let transporter = nodemailer.createTransport(nodemailerOptions);
 

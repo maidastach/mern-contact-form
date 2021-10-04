@@ -7,8 +7,8 @@ const contactSchema = new mongoose.Schema(
         telephone: { type: String, required: true },
         city: { type: String, required: true },
         message: { type: String, required: true },
-        sentConfirmation: { type: Boolean },
-        receivedEmail: { type: Boolean }
+        sentConfirmation: { type: Boolean, default: false },
+        receivedEmail: { type: Boolean, default: false }
 },
 {
     timestamps: true,

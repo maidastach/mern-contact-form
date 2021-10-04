@@ -13,6 +13,7 @@ const ContactForm = () =>
 {
   const [form, setForm] = useState({ fname: '', email: '', telephone: '', city: '', message: '' })
   const [errors, setErrors] = useState({ })
+  const [isLoading, setIsLoading] = useState(false)
 
   const validate = () => 
   {
@@ -48,22 +49,29 @@ const ContactForm = () =>
   const handleSubmit = async(event) =>
   {
     event.preventDefault()
+    setIsLoading(true)
     if(validate())
     {
       try
       {
         const response = await axios.post('/api/contact', form)
         if(response.status === 200)
+        {
           window.alert(`${response.data.message}, check console for the response`)
-
+          setIsLoading(false)
+          setForm({ fname: '', email: '', telephone: '', city: '', message: '' })
+        }
         console.log(response)
       }
       catch (error)
       {
           window.alert(`${error}, check console for the error`)
           console.log(error);
-      }
+          setIsLoading(false)
+        }
     }
+    else
+    setIsLoading(false)
   };
 
   return (
@@ -99,6 +107,7 @@ const ContactForm = () =>
                   autoFocus
                   value={form.fname}
                   onChange={handleOnChange}
+                  disabled={isLoading}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -113,6 +122,7 @@ const ContactForm = () =>
                   autoComplete="email"
                   value={form.email}
                   onChange={handleOnChange}
+                  disabled={isLoading}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -127,6 +137,7 @@ const ContactForm = () =>
                   value={form.telephone}
                   onChange={handleOnChange}
                   autoComplete="telephone"
+                  disabled={isLoading}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -141,6 +152,7 @@ const ContactForm = () =>
                   label="City"
                   value={form.city}
                   onChange={handleOnChange}
+                  disabled={isLoading}
                 />
               </Grid>
               
@@ -159,6 +171,7 @@ const ContactForm = () =>
                   id="message"
                   onChange={handleOnChange}
                   autoComplete="message"
+                  disabled={isLoading}
                 />
               </Grid>
             </Grid>
@@ -167,8 +180,9 @@ const ContactForm = () =>
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
             >
-               Submit
+               {isLoading ? 'Loading...' : 'Submit'}
             </Button>
  
           </Box>
